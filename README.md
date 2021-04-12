@@ -13,4 +13,8 @@ Kurulum/installation :
 * `cd easyword`
 * `python2 easyword.py`
 
+Test edilen yerler/ Testing platforms
+* Termux
+
+
 
