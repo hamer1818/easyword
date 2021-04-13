@@ -1,6 +1,14 @@
 # easyword
 Recreated by hamer1818
 
+Açıklama:
+
+Bu program sayesinde kendi büyük wordlistlerinizi oluşturabilceksiniz
+
+Explanation:
+With this program, you will be able to create your own large wordlists. 
+
+--------------------------------
 Kurulum/installation :
 * `apt-get update -y`
 * `apt-get upgrade -y`
@@ -12,7 +20,7 @@ Kurulum/installation :
 * `cd $HOME`
 * `cd easyword`
 * `python2 easyword.py`
-
+----------------------------------
 Test edilen yerler/ Testing platforms
 * `Termux`
 * `Kali Linux`
