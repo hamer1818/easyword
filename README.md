@@ -14,7 +14,8 @@ Kurulum/installation :
 * `python2 easyword.py`
 
 Test edilen yerler/ Testing platforms
-* Termux
+* `Termux`
+* `Kali Linux`
 
 
 
