@@ -1,29 +1,51 @@
-# easyword
-Recreated by hamer1818
+# Wordlist Oluşturucu
 
-Açıklama:
+Python ve PyQt6 kullanarak geliştirilmiş bir **Wordlist Oluşturma** uygulaması.
 
-Bu program sayesinde kendi büyük wordlistlerinizi oluşturabilceksiniz
+## Özellikler
 
-Explanation:
-With this program, you will be able to create your own large wordlists. 
+- Kullanıcı dostu arayüz ile kolay kullanım
+- İstenilen karakter uzunluğunda wordlist oluşturma
+- Özel dosya adı belirleyebilme
+- Otomatik `.txt` uzantısı ekleme
+- Geliştirici bilgisi ve proje GitHub bağlantısı
 
---------------------------------
-Kurulum/installation :
-* `apt-get update -y`
-* `apt-get upgrade -y`
-* `pkg install python -y`
-* `pkg install python2 -y`
-* `pkg install git -y`
-* `pip install lolcat`
-* `git clone https://github.com/hamer1818/easyword`
-* `cd $HOME`
-* `cd easyword`
-* `python2 easyword.py`
-----------------------------------
-Test edilen yerler/ Testing platforms
-* `Termux`
-* `Kali Linux`
+## Gereksinimler
 
+- Python 3.x
+- PyQt6
 
+## Kurulum
 
+1. **Projeyi klonlayın** veya indirin:
+
+   ```bash
+   git clone https://github.com/hamer1818/easyword.git
+    ```
+
+2. **Sanal ortam oluşturun** ve aktif edin:
+    1. Windows:
+        ```bash
+        python -m venv venv
+        venv\Scripts\activate
+        ```
+    2. Linux:
+        ```bash
+        python3 -m venv venv
+        source venv/bin/activate
+        ```
+3. **Gerekli kütüphaneleri yükleyin**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4. **Uygulamayı çalıştırın**:
+    ```bash
+    python main.py
+    ```
+5. **Kullanın**:
+    - İstenilen karakter uzunluğunu girin
+    - Dosya adını belirleyin
+    - Oluştur'a tıklayın
+    - İşlem tamamlandığında `Wordlist oluşturuldu!` uyarısını alacaksınız
+
+    
