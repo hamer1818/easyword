@@ -1,7 +1,8 @@
 import sys
 import time
 import itertools
-from PyQt6 import QtWidgets, QtCore  # QtCore eklendi
+import multiprocessing
+from PyQt6 import QtWidgets, QtCore
 
 class WordlistGenerator(QtWidgets.QWidget):
     def __init__(self):
@@ -10,7 +11,7 @@ class WordlistGenerator(QtWidgets.QWidget):
 
     def init_ui(self):
         self.setWindowTitle("Wordlist Oluşturucu")
-        self.setGeometry(100, 100, 400, 250)  # Yükseklik arttırıldı
+        self.setGeometry(100, 100, 400, 250)
 
         # Layout
         layout = QtWidgets.QVBoxLayout()
@@ -58,7 +59,7 @@ class WordlistGenerator(QtWidgets.QWidget):
         name = self.name_input.text()
 
         if not name.endswith('.txt'):
-            name += '.txt'  # '.txt' eki ekleniyor
+            name += '.txt'
 
         self.status_label.setText("Wordlist oluşturuluyor, lütfen bekleyin...")
         QtWidgets.QApplication.processEvents()
@@ -66,15 +67,42 @@ class WordlistGenerator(QtWidgets.QWidget):
         start_time = time.perf_counter()
 
         characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ1234567890!@#$%^&*"
+        num_processes = multiprocessing.cpu_count()
+        chunk_size = len(characters) ** length // num_processes
 
-        with open(name, "w") as file:
-            for combination in itertools.product(characters, repeat=length):
-                file.write(''.join(combination) + "\n")
+        pool = multiprocessing.Pool(processes=num_processes)
+        temp_files = []
+
+        for i in range(num_processes):
+            start_idx = i * chunk_size
+            temp_file = f"{name}.part{i}"
+            temp_files.append(temp_file)
+            pool.apply_async(generate_wordlist_chunk, args=(characters, length, start_idx, chunk_size, temp_file))
+
+        pool.close()
+        pool.join()
+
+        merge_files(temp_files, name)
 
         end_time = time.perf_counter()
         elapsed_time = end_time - start_time
 
         self.status_label.setText(f"Tamamlandı, {elapsed_time:.2f} saniye sürdü.\n'{name}' dosyasını kontrol edin.")
+
+def generate_wordlist_chunk(characters, length, start_idx, chunk_size, temp_file):
+    with open(temp_file, "w") as file:
+        for i, combination in enumerate(itertools.product(characters, repeat=length)):
+            if start_idx <= i < start_idx + chunk_size:
+                file.write(''.join(combination) + "\n")
+            elif i >= start_idx + chunk_size:
+                break
+
+def merge_files(temp_files, output_file):
+    with open(output_file, "w") as outfile:
+        for temp_file in temp_files:
+            with open(temp_file, "r") as infile:
+                outfile.write(infile.read())
+            os.remove(temp_file)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
